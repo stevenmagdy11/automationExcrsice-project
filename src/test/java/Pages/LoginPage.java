@@ -10,30 +10,32 @@ import java.time.Duration;
 public class LoginPage {
     WebDriver driver;
     WebDriverWait wait;
-    public LoginPage(WebDriver driver)
-    {
-        this.driver=driver;
-        wait=new WebDriverWait(this.driver, Duration.ofSeconds(20));
+
+    public LoginPage(WebDriver driver) {
+        this.driver = driver;
+        wait = new WebDriverWait(this.driver, Duration.ofSeconds(20));
 
     }
-    By emailOfLoginLocator =By.xpath("(//input[@type='email'])[1]");
-    By passwordOfLoginLocator =By.xpath("(//input[@type='password'])[1]");
-    By clickLoginButtonLocator = By.xpath("(//button[@type='submit'])[1]");
 
-    public void setEmailOfLoginLocator(String emailOfLogin)
-    {
-        driver.findElement(emailOfLoginLocator).sendKeys(emailOfLogin);
+    By emailOfLoginLocator = By.xpath("//input[@data-qa='login-email']");
+    By passwordOfLoginLocator = By.xpath("//input[@data-qa='login-password']");
+    By clickLoginButtonLocator = By.xpath("//button[@data-qa='login-button']");
+    By errorMessageLocator = By.xpath("//form[@action='/login']/p");
+
+    public void setEmailOfLoginLocator(String emailOfLogin) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(emailOfLoginLocator)).sendKeys(emailOfLogin);
     }
 
-    public void setPasswordOfLoginLocator(String  passwordOfLogin)
-    {
-        driver.findElement(passwordOfLoginLocator).sendKeys(passwordOfLogin);
-    }
-    public void clickLoginButton()
-    {
-       wait.until(ExpectedConditions.elementToBeClickable(clickLoginButtonLocator)).click();
+    public void setPasswordOfLoginLocator(String passwordOfLogin) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordOfLoginLocator)).sendKeys(passwordOfLogin);
     }
 
+    public void clickLoginButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(clickLoginButtonLocator)).click();
+    }
 
+    public String getErrorMessage() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessageLocator)).getText();
+    }
 
 }
