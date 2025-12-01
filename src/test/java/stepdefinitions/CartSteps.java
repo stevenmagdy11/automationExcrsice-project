@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+import Pages.productsPages.WomanCategoryPage;
 import hooks.Hooks;
 import Pages.HomePage;
 import Pages.ShoppingCartPage;
@@ -10,6 +11,8 @@ public class CartSteps {
 
     HomePage homePage;
     ShoppingCartPage shoppingCartPage;
+    WomanCategoryPage womanCategoryPage =new WomanCategoryPage(Hooks.getDriver());
+
 
     private void initPages() {
         if (homePage == null) {
@@ -20,8 +23,12 @@ public class CartSteps {
     @Given("I have added products to the cart")
     public void i_have_added_products_to_the_cart() {
         initPages();
+        homePage.openproductsPage();
+        womanCategoryPage.openWomenCategory();
+        womanCategoryPage.openWomenDress();
+        womanCategoryPage.clickItemOneWomenDressProducts();
+        womanCategoryPage.ClickContinueButton();
 
-        homePage.openproductsPage().ClickContinueButton();
 
     }
 

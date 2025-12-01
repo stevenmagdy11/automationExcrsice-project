@@ -1,5 +1,8 @@
 package stepdefinitions;
 
+import Pages.HomePage;
+import Pages.LoginPage;
+import Pages.ShoppingCartPage;
 import hooks.Hooks;
 import Pages.PaymentCheckoutPage;
 import io.cucumber.datatable.DataTable;
@@ -11,13 +14,36 @@ import java.util.Map;
 public class CheckoutSteps {
 
     PaymentCheckoutPage paymentCheckoutPage;
+    HomePage homePage;
+    LoginPage loginPage = new LoginPage(Hooks.getDriver());
+    ShoppingCartPage shoppingCartPage =new ShoppingCartPage(Hooks.getDriver());
+
 
     public CheckoutSteps() {
         paymentCheckoutPage = new PaymentCheckoutPage(Hooks.getDriver());
     }
+    private void initPages() {
+        if (homePage == null) {
+            homePage = new HomePage(Hooks.getDriver());
+        }
+    }
+    @Given("I am on the home page")
+    public void i_am_on_the_home_page() {
+        initPages();
+        String title = Hooks.getDriver().getTitle();
+        Assert.assertEquals(title, "Automation Exercise");
+    }
 
     @Given("I am logged in")
     public void i_am_logged_in() {
+
+        initPages();
+        loginPage=homePage.openLoginPage();
+            loginPage.setEmailOfLoginLocator("steve123@gmail.com");
+
+            loginPage.setPasswordOfLoginLocator("steve123456");
+            loginPage.clickLoginButton();
+
 
     }
 
@@ -28,14 +54,20 @@ public class CheckoutSteps {
 
     @When("I enter payment details:")
     public void i_enter_payment_details(DataTable dataTable) {
-        List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
-        Map<String, String> paymentData = data.get(0);
 
-        paymentCheckoutPage.setNameOnCardOfPymentCheckOut(paymentData.get("Name on Card"));
-        paymentCheckoutPage.setCardNumberOfPymentCheckOut(paymentData.get("Card Number"));
-        paymentCheckoutPage.setCVCOfPymentCheckOut(paymentData.get("CVC"));
-        paymentCheckoutPage.setExpiryMonthOfPymentCheckOut(Integer.parseInt(paymentData.get("Expiration Month")));
-        paymentCheckoutPage.setExpiryYearOfPymentCheckOut(Integer.parseInt(paymentData.get("Expiration Year")));
+        Map<String, String> data = dataTable.asMaps(String.class, String.class).get(0);
+
+        String nameOfCard = data.get("Name on Card");
+        String cardNumber = data.get("Card Number");
+        String cvc = data.get("CVC");
+        int month = Integer.parseInt(data.get("Expiration Month"));
+        int year = Integer.parseInt(data.get("Expiration Year"));
+
+        paymentCheckoutPage.setNameOnCardOfPymentCheckOut(nameOfCard);
+        paymentCheckoutPage.setCardNumberOfPymentCheckOut(cardNumber);
+        paymentCheckoutPage.setCVCOfPymentCheckOut(cvc);
+        paymentCheckoutPage.setExpiryMonthOfPymentCheckOut(month);
+        paymentCheckoutPage.setExpiryYearOfPymentCheckOut(year);
     }
 
     @When("I click \"Pay and Confirm Order\"")
@@ -64,5 +96,26 @@ public class CheckoutSteps {
 
     @Then("I should see the order review")
     public void i_should_see_the_order_review() {
+    }
+
+    @And("I click Proceed To Checkout")
+    public void iClickProceedToCheckout() {
+        initPages();
+        shoppingCartPage.clickProceedToCheckOut();
+        shoppingCartPage.clickRegisterOrLoginAccountPagesButton();
+        loginPage.setEmailOfLoginLocator("stevenmagdy100@gmail.com");
+        loginPage.setPasswordOfLoginLocator("steve123456");
+        loginPage.clickLoginButton();
+        homePage.openCartPage();
+        shoppingCartPage.clickProceedToCheckOut();
+        shoppingCartPage.clickPlaceOrderButtonLocator();
+
+
+    }
+
+    @And("I click Pay and Confirm Order")
+    public void iClickPayAndConfirmOrder() {
+        initPages();
+        paymentCheckoutPage.clickConfirmOrderButton();
     }
 }

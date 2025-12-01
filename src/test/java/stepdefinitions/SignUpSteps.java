@@ -61,4 +61,52 @@ public class SignUpSteps {
             Assert.assertFalse(onAccountPage, "Expected NOT to be on Account Information page");
         }
     }
+
+
+    @Then("I fill the account information with valid data {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string}")
+    public void iFillTheAccountInformationWithValidData(
+            String gender,
+            String firstName,
+            String lastName,
+            String email,
+            String password,
+            String day,
+            String month,
+            String year,
+            String company,
+            String address1,
+            String address2,
+            String country,
+            String state,
+            String city,
+            String zipcode,
+            String mobileNumber) {
+
+        initPages();
+        accountInformationPage = new AccountInformationPage(Hooks.getDriver());
+
+
+        if (gender.equalsIgnoreCase("male")) {
+            accountInformationPage.selectMaleGender();
+        } else {
+            accountInformationPage.selectFemaleGender();
+        }
+
+
+        accountInformationPage.setFirstName(firstName);
+        accountInformationPage.setLastName(lastName);
+        accountInformationPage.setEmail(email);
+        accountInformationPage.setPassword(password);
+        accountInformationPage.setDay(day);
+        accountInformationPage.setMonth(month);
+        accountInformationPage.setYear(year);
+        accountInformationPage.setCompany(company);
+        accountInformationPage.setAddressOne(address1);
+        accountInformationPage.setAddressTwo(address2);
+        accountInformationPage.setCountry(country);
+        accountInformationPage.setState(state);
+        accountInformationPage.setCity(city);
+        accountInformationPage.setZipcode(zipcode);
+        accountInformationPage.setMobileNumber(mobileNumber);
+    }
 }

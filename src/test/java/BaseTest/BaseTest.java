@@ -8,6 +8,7 @@ import Pages.productsPages.ProductsPage;
 import Pages.productsPages.WomanCategoryPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
@@ -52,8 +53,8 @@ public class BaseTest {
         driver.get("https://automationexercise.com/");
 
     }
- /*   @AfterClass
+    @AfterClass
     public void teardown(){
         driver.quit();
-    }*/
+    }
 }

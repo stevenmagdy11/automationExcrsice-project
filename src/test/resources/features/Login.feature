@@ -4,7 +4,7 @@ Feature: User Login
   So that I can access my account
 
   Background:
-    Given I am on the home page
+    Given I am on the home page website
     And I navigate to the login page
 
   Scenario Outline: Login with various credentials
@@ -18,3 +18,6 @@ Feature: User Login
       |                     | steve123456 | false   |
       | steve123@gmail.com  |             | false   |
       | steve123@gmail.com  | steve123456 | true    |
+
+
+

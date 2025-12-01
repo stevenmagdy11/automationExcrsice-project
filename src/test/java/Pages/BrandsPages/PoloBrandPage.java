@@ -24,7 +24,7 @@ public class PoloBrandPage {
 
     By PoloBrandButtonLocator = By.xpath("(//span[@class='pull-right'])[1]");
     By ItemOneOfPoloBrandLocator = By.xpath("(//a[@class='btn btn-default add-to-cart' and @data-product-id='1'])[1]");
-    By ContinueButtonOfPoloBrandLocator = By.cssSelector("button.close-modal.btn-success");
+    By ContinueButtonOfPoloBrandLocator = By.cssSelector("button.close-modal.btn-success.btn");
     By ItemTwoOfPoloBrandLocator = By.xpath("(//a[@class='btn btn-default add-to-cart' and @data-product-id='8'])[1]");
     By ViewCartLinkOfPoloBrandLocator = By.xpath("//u[text()='View Cart']");
     By ActualMassageWhenAddToCartOfProductPage = By.xpath("//p[text()='Your product has been added to cart.']");
@@ -60,7 +60,7 @@ public class PoloBrandPage {
 
     public void clickContinueButtonOfPoloBrand() {
         WebElement element2 = wait.until(ExpectedConditions.elementToBeClickable(ContinueButtonOfPoloBrandLocator));
-        js.executeScript("arguments[0].click();", element2);
+       element2.click();
 
     }
 

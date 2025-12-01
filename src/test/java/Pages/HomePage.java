@@ -20,6 +20,12 @@ public class HomePage {
     By cartButton = By.linkText("Cart");
     By PoloBrandButtonLocator = By.xpath("(//span[@class='pull-right'])[1]");
     By loggedInAsLocator = By.xpath("//li/a[contains(text(), 'Logged in as')]");
+    By contactUsButton = By.xpath("//a[text()=' Contact us']");
+    By testCasesButton = By.xpath("//a[text()=' Test Cases']");
+    By subscriptionInput = By.id("susbscribe_email");
+    By subscribeButton = By.id("subscribe");
+    By subscriptionSuccessMessage = By.id("success-subscribe");
+    By footer = By.id("footer");
 
     public boolean isLoggedIn() {
         try {
@@ -54,6 +60,62 @@ public class HomePage {
     public PoloBrandPage openPoloBrand() {
         driver.findElement(PoloBrandButtonLocator).click();
         return new PoloBrandPage(driver);
+    }
+
+
+
+    public TestCasesPage openTestCasesPage() {
+        driver.findElement(testCasesButton).click();
+        return new TestCasesPage(driver);
+    }
+
+    public void enterSubscriptionEmail(String email) {
+        driver.findElement(subscriptionInput).sendKeys(email);
+    }
+
+    public void clickSubscribeButton() {
+        driver.findElement(subscribeButton).click();
+    }
+
+    public void subscribe(String email) {
+        enterSubscriptionEmail(email);
+        clickSubscribeButton();
+    }
+
+    public String getSubscriptionSuccessMessage() {
+        return wait.until(org.openqa.selenium.support.ui.ExpectedConditions
+                .visibilityOfElementLocated(subscriptionSuccessMessage)).getText();
+    }
+
+    public boolean isSubscriptionSuccessMessageVisible() {
+        try {
+            return wait.until(org.openqa.selenium.support.ui.ExpectedConditions
+                    .visibilityOfElementLocated(subscriptionSuccessMessage)).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void scrollToFooter() {
+        org.openqa.selenium.JavascriptExecutor js = (org.openqa.selenium.JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(footer));
+    }
+
+    public boolean isFooterVisible() {
+        return driver.findElement(footer).isDisplayed();
+    }
+
+    public boolean isSubscriptionInputVisible() {
+        return driver.findElement(subscriptionInput).isDisplayed();
+    }
+
+    public Pages.BrandsPages.GenericBrandPage openBrand(String brandName) {
+        By brandLocator = By.xpath("//div[@class='brands_products']//a[contains(text(),'" + brandName + "')]");
+        org.openqa.selenium.WebElement element = wait
+                .until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(brandLocator));
+        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        element.click();
+        return new Pages.BrandsPages.GenericBrandPage(driver, brandName);
     }
 
 }

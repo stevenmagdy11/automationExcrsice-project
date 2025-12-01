@@ -20,7 +20,8 @@ public class LoginPage {
     By emailOfLoginLocator = By.xpath("//input[@data-qa='login-email']");
     By passwordOfLoginLocator = By.xpath("//input[@data-qa='login-password']");
     By clickLoginButtonLocator = By.xpath("//button[@data-qa='login-button']");
-    By errorMessageLocator = By.xpath("//form[@action='/login']/p");
+    By ActualErrorMessageLoginPageLocator = By.xpath("//p[text()='Your email or password is incorrect!']");
+    String ExpectedErrorMessageLoginPageLocator ="Your email or password is incorrect!";
 
     public void setEmailOfLoginLocator(String emailOfLogin) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(emailOfLoginLocator)).sendKeys(emailOfLogin);
@@ -34,8 +35,13 @@ public class LoginPage {
         wait.until(ExpectedConditions.elementToBeClickable(clickLoginButtonLocator)).click();
     }
 
-    public String getErrorMessage() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessageLocator)).getText();
+    public String getActualErrorMessage() {
+        return driver.findElement(ActualErrorMessageLoginPageLocator).getText();
     }
+    public String getExpectedErrorMessageLoginPageLocator()
+    {
+        return ExpectedErrorMessageLoginPageLocator;
+    }
+
 
 }

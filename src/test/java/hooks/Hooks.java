@@ -13,7 +13,7 @@ public class Hooks {
     public void setUp() {
         WebDriver d = new FirefoxDriver();
         d.manage().window().maximize();
-        d.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        d.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         d.get("https://automationexercise.com/");
         driver.set(d);
     }

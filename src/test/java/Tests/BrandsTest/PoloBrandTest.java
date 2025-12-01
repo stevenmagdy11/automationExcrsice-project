@@ -6,11 +6,11 @@ import org.testng.annotations.Test;
 public class PoloBrandTest extends BaseTest {
 
     @Test
-    public void  ensureValidationPoloBrand()
-    {
+    public void  ensureValidationPoloBrand() throws InterruptedException {
        productsPage= homePage.openproductsPage();
        poloBrandPage.clickPoloBrandButton();
-       poloBrandPage.clickItemOneOfPoloBrand();;
+       poloBrandPage.clickItemOneOfPoloBrand();
+       Thread.sleep(3000);
        poloBrandPage.clickContinueButtonOfPoloBrand();
     
 
